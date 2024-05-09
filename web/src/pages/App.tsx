@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import style from './Botao.module.scss';
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
     fetch(enderecoRequicao)
       .then(resposta => {
 
-        if(!resposta.ok) { return Promise.reject(new Error('Deu erro, se vira!')) }
+        if(!resposta.ok) { return Promise.reject(new Error('Algo deu errado!')) }
 
         return resposta.json();
       })
@@ -21,15 +22,22 @@ function App() {
       })
       .catch(error => { 
         setJaCarregouLivros(false);
-        console.log(error.message)
       } );
   }
 
   return (
-    <div className="App">
-      <button onClick={carregaLivros}>Carrega Livros</button>
+    <div>
+      <header className={style.header}>
+        <div>
+          <center>
+          <h2><strong>Livraria On Line</strong></h2>
+          </center>
+        </div>
+      </header>
+      <br></br>
+      <button className={style.botao} onClick={carregaLivros}>Listar Livros</button>
       {jaCarregouLivros && livros.length === 0 && <h3>Nenhum livro foi encontrado!</h3>}
-      {!jaCarregouLivros && <h3>Clique no botão para carregar os livros</h3>}
+      {!jaCarregouLivros && <h3>Clique no botão para listar os livros</h3>}
       {jaCarregouLivros && livros.map((livro: any) => (
         <div key={livro.id}>
           <h2>{livro.titulo}</h2>
